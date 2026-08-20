@@ -244,6 +244,71 @@ const forms: Record<string, FormConfig> = {
       size: { xs: 12 },
     },
   },
+
+  page: {
+    name: {
+      type: "text",
+      label: "Page Name",
+      placeholder: "e.g., System Metrics, Infrastructure Overview",
+      size: { xs: 12 },
+      advanced: { required: "Page name is required" },
+    },
+    description: {
+      type: "textarea",
+      label: "Description",
+      placeholder: "Purpose of this dashboard page...",
+      size: { xs: 12 },
+      advanced: { required: "Description is required" },
+    },
+  },
+
+  widget: {
+    title: {
+      type: "text",
+      label: "Widget Title",
+      placeholder: "e.g., CPU Utilization",
+      size: { xs: 12 },
+      advanced: { required: "Widget title is required" },
+    },
+    host_id: {
+      type: "select",
+      label: "Target Host",
+      placeholder: "Select server...",
+      optionsKey: "hosts",
+      size: { xs: 12, md: 6 },
+      advanced: { required: "Select a host" },
+    },
+    chart_type: {
+      type: "select",
+      label: "Chart Type",
+      placeholder: "Select visualization...",
+      options: [
+        { id: "LINE", label: "Line Chart" },
+        { id: "AREA", label: "Area Chart" },
+        { id: "BAR", label: "Bar Chart" },
+        { id: "GAUGE", label: "Gauge" },
+        { id: "STAT", label: "Single Stat" },
+      ],
+      size: { xs: 12, md: 6 },
+      advanced: { required: "Select chart type" },
+    },
+    collector: {
+      type: "select",
+      label: "Collector",
+      placeholder: "Select collector...",
+      optionsKey: "collectors",
+      size: { xs: 12, md: 6 },
+      advanced: { required: "Select collector" },
+    },
+    metric_item: {
+      type: "select",
+      label: "Metric Item",
+      placeholder: "Select item...",
+      optionsKey: "metric_items",
+      size: { xs: 12, md: 6 },
+      advanced: { required: "Select metric item" },
+    },
+  },
 };
 
 export default forms;
