@@ -1,35 +1,27 @@
-# Use the Node base image as the build stage
-FROM node:alpine AS build
+FROM node:24-alpine AS build
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the package.json and package-lock.json to the container
-COPY package.json .
+COPY package.json package-lock.json ./
 
-# Install dependencies
-RUN npm install
+RUN npm ci
 
-# Copy the rest of the application code to the container
 COPY . .
 
-# Build the Next.js app
 RUN npm run build
 
-# Use the Node base image for the production stage
-FROM node:alpine AS production
+FROM node:24-alpine AS production
 
-# Install cURL
-RUN apk add curl
+RUN apk add --no-cache curl
 
-# Set the working directory in the container
 WORKDIR /app
 
-# Copy the built application from the build stage
-COPY --from=build /app ./
+ENV NODE_ENV=production
 
-# Expose the container port
+COPY --from=build /app/public ./public
+COPY --from=build /app/.next/standalone ./
+COPY --from=build /app/.next/static ./.next/static
+
 EXPOSE 3000
 
-# Start the Next.js application
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
